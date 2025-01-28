@@ -1,6 +1,6 @@
 import {Request,Response,NextFunction} from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import {JWTTOKEN} from './config';
+import {JWTTOKEN} from '@repo/backend-common/config';
 export function AuthUser(req:Request,res:Response,next:NextFunction){
     if(!req.headers['authorization']){
         res.status(401).json({message:'Unauthorized'});

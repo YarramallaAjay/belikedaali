@@ -21,6 +21,9 @@
     "express": "^4.21.2",
     "http-backend": "file:",
     "jsonwebtoken": "^9.0.2",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "@repo/backend-common": "workspace:*",
+    "@repo/common": "workspace:*"
+
   }
 }
