@@ -12,5 +12,4 @@ export const signInSchema=z.object({
 })
 
 export const createRoomSchema=z.object({
-    name:z.string().min(3).max(20),
-    description:z.string().min(10).max(100)});
+    slug:z.string().min(3).max(20)})

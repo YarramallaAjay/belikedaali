@@ -1,9 +1,9 @@
 {
-  "name": "@repo/common",
+  "name": "@repo/db",
   "version": "1.0.0",
   "main": "index.js",
   "exports":{
-    "./zodSchema": "./src/index.ts"
+    "./prisma":"./src/index.ts"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,10 +13,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "common": "file:",
-    "zod": "^3.24.1"
+    "@prisma/client": "^6.2.1",
+    "db": "file:",
+    "prisma": "^6.2.1"
   },
   "devDependencies": {
-    "@repo/typescript-config":"workspace:*"
+    "@repo/typescript-config": "workspace:*"
   }
 }

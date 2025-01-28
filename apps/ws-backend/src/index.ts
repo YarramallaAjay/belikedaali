@@ -1,29 +1,29 @@
-import { WebSocketServer } from "ws";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { JWTTOKEN } from "@repo/backend-common/config";
+// import { WebSocketServer } from "ws";
+// import jwt, { JwtPayload } from "jsonwebtoken";
+// import { JWTTOKEN } from "@repo/backend-common/config";
 
-const wss=new WebSocketServer({port:8080});
+// const wss=new WebSocketServer({port:8080});
 
-wss.on("connection",(ws,request)=>{
-    const url=request.url;
-    console.log(`New connection from ${url}`);
-    if(url==null){
-        return null;
-    }   
-    const params=new URLSearchParams(url?.split("?")[1]);
-    const token=params.get("token");
-    if(!token){
-        return null;
-    }
-    const decoded=jwt.verify(token,JWTTOKEN);
-    if(!decoded || !(decoded as JwtPayload) .userId){
-        console.log(`Invalid user`);
-        ws.close();
-        return;
+// wss.on("connection",(ws,request)=>{
+//     const url=request.url;
+//     console.log(`New connection from ${url}`);
+//     if(url==null){
+//         return null;
+//     }   
+//     const params=new URLSearchParams(url?.split("?")[1]);
+//     const token=params.get("token");
+//     if(!token){
+//         return null;
+//     }
+//     const decoded=jwt.verify(token,JWTTOKEN);
+//     if(!decoded || !(decoded as JwtPayload) .userId){
+//         console.log(`Invalid user`);
+//         ws.close();
+//         return;
 
-    }
+//     }
 
-    ws.on("message",message=>{
-        ws.send(`Hello, you sent -> ${message}`);
-    })
-})
+//     ws.on("message",message=>{
+//         ws.send(`Hello, you sent -> ${message}`);
+//     })
+// })
