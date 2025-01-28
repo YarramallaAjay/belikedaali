@@ -78,6 +78,25 @@ app.post('/createroom',AuthUser,async (req,res)=>{
     res.status(200).json(newRoom.id);
 })
 
+app.get("/chats/:roomId",AuthUser,async (req,res)=>{
+    const roomId=Number(req.params.roomId)
+    if(!roomId){
+        res.json("room Id not found")
+        return
+    }
+    const messages=await prismaClient.chat.findMany({
+        where:{
+            roomId:roomId
+        },
+        orderBy:{
+            id:"desc"
+        },
+        take:50
+    })
+
+    res.json(messages)
+})
+
 
     app.listen(3001,()=>{
         console.log('Server is running on port 3001');
