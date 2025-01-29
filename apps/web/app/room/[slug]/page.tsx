@@ -33,7 +33,6 @@ export default async function ChatRoom({params}:{
     return <>
     <Chats id={room.id as unknown as string}></Chats>
 
-    <p>get into chat</p>
     </>
 
 }

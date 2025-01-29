@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
-import { ChatRoomClient } from "./ChatRoomClient";
+import ChatRoomClient from "./ChatRoomClient";
 
 
 async function getChats(url:string)
@@ -36,7 +36,7 @@ export async function Chats({id}:{id:string,
     console.log(chats)
 
     return <>
-    <ChatRoomClient  messages={chats} id={id} ></ChatRoomClient>
+    <ChatRoomClient  initialMessages={chats} roomId={id} ></ChatRoomClient>
     </>
 
 
