@@ -78,7 +78,7 @@ app.post('/createroom',AuthUser,async (req,res)=>{
     res.status(200).json(newRoom.id);
 })
 
-app.get("/chats/:roomId",AuthUser,async (req,res)=>{
+app.get("/chats/:roomId",async (req,res)=>{
     const roomId=Number(req.params.roomId)
     if(!roomId){
         res.json("room Id not found")
@@ -89,12 +89,29 @@ app.get("/chats/:roomId",AuthUser,async (req,res)=>{
             roomId:roomId
         },
         orderBy:{
-            id:"desc"
-        },
+            id:"asc"},
         take:50
     })
+    console.log(messages)
 
     res.json(messages)
+})
+
+
+app.get("/room/:slug",async (req,res)=>{
+    const slug=req.params.slug
+    if(!slug){
+        res.json("slug not found")
+        return
+    }
+    const room=await prismaClient.room.findFirst({
+        where:{
+            slug
+        }
+    })
+    console.log(room)
+
+    res.json(room)
 })
 
 

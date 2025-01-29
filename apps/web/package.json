@@ -12,9 +12,14 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
+    "@tailwindcss/cli": "^4.0.0",
+    "@types/ws": "^8.5.14",
+    "axios": "^1.7.9",
     "next": "^15.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

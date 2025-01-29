@@ -60,13 +60,15 @@ async function syncMessagesToDB(message:any,userId:string){
 
 wss.on("connection",(ws,request)=>{
     const url=request.url;
-    console.log(`New connection from ${url}`);
+    console.log(`New connection from`);
+    console.log(request)
     if(url==null){
         return null;
     }   
     const params=new URLSearchParams(url?.split("?")[1]);
     const token=params.get("token");
     if(!token){
+        console.log("token not found in URL")
         return null;
     }
     const userId=AuthUser(token)
@@ -75,11 +77,11 @@ wss.on("connection",(ws,request)=>{
         return null;
     }
 
-    users.push({
-        ws,
-        userId,
-        rooms:[]
-    })
+        users.push({
+            userId,
+            ws,
+            rooms:[]
+        })
 
     
     ws.on("message",async (data)=>{
@@ -100,7 +102,10 @@ wss.on("connection",(ws,request)=>{
                 ws.send("room not found")
                 return
             }
-            users.find(user=>user.ws===ws)?.rooms.push(parsedData.roomId)
+            users.find(user=>{
+                if(user.ws===ws){
+                    user.rooms?.find(id=> parsedData.roomId===room.id)?null:user.rooms.push(parsedData.roomId)
+                }})
             console.log(users)
         }
 
