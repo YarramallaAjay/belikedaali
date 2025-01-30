@@ -17,6 +17,10 @@
     "node": ">=18"
   },
   "dependencies": {
-    "belikedaali": "file:"
+    "@heroicons/react": "^2.2.0",
+    "@tailwindcss/postcss": "^4.0.1",
+    "belikedaali": "file:",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.1"
   }
 }

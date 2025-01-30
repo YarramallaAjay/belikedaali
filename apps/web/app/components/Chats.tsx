@@ -35,8 +35,13 @@ export async function Chats({id}:{id:string,
     
     console.log(chats)
 
+    const currentUser={
+        name:"Ajay",
+        id:"123"
+    }
+
     return <>
-    <ChatRoomClient  initialMessages={chats} roomId={id} ></ChatRoomClient>
+    <ChatRoomClient  initialMessages={chats} roomId={id} currentUser={currentUser} ></ChatRoomClient>
     </>
 
 

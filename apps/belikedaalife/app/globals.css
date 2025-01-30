@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;700&display=swap');
+
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background: 255, 255, 255;
+  --cursor-color: rgba(59, 130, 246, 0.2);
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    
+    /* Button Colors */
+    --btn-primary: 221.2 83.2% 53.3%;
+    --btn-primary-hover: 221.2 83.2% 45%;
+    --btn-secondary: 327 73% 52%;
+    --btn-secondary-hover: 327 73% 45%;
+    --btn-success: 142 71% 45%;
+    --btn-success-hover: 142 71% 38%;
+  }
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, var(--cursor-color) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.floating-bubble {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 15s infinite linear;
+}
+
+.floating-bubble:nth-child(4n + 1) { background: rgba(59, 130, 246, 0.15); }
+.floating-bubble:nth-child(4n + 2) { background: rgba(236, 72, 153, 0.15); }
+.floating-bubble:nth-child(4n + 3) { background: rgba(34, 197, 94, 0.15); }
+.floating-bubble:nth-child(4n + 4) { background: rgba(168, 85, 247, 0.15); }
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100px) scale(1) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: white;
+  border: 2px solid transparent;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    currentColor 0%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn:hover::before {
+  opacity: 0.15;
+}
+
+.btn-primary {
+  color: hsl(var(--btn-primary));
+  border-color: currentColor;
+}
+
+.btn-primary:hover {
+  color: white;
+  background: hsl(var(--btn-primary));
+}
+
+.btn-secondary {
+  color: hsl(var(--btn-secondary));
+  border-color: currentColor;
+}
+
+.btn-secondary:hover {
+  color: white;
+  background: hsl(var(--btn-secondary));
+}
+
+.btn-success {
+  color: hsl(var(--btn-success));
+  border-color: currentColor;
+}
+
+.btn-success:hover {
+  color: white;
+  background: hsl(var(--btn-success));
+}
+
+.feature-card {
+  position: relative;
+  background: white;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    currentColor 0%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.feature-card:hover::before {
+  opacity: 0.15;
+}
+
+.feature-card.drawing {
+  color: hsl(var(--btn-primary));
+  border-color: currentColor;
+}
+
+.feature-card.collaboration {
+  color: hsl(var(--btn-secondary));
+  border-color: currentColor;
+}
+
+.feature-card.sharing {
+  color: hsl(var(--btn-success));
+  border-color: currentColor;
+}
+
+.sketch-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.sketch-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.3;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: left;
+}
+
+.sketch-underline:hover::after {
+  transform: scaleX(1);
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+.wiggle-hover:hover {
+  animation: wiggle 0.3s ease-in-out;
+}

@@ -8,7 +8,13 @@
     "./code": "./src/code.tsx",
     "./avatar": "./src/avatar.tsx",
     "./input": "./src/input.tsx",
-    "./scrollarea": "./src/scrollarea.tsx"
+    "./scrollarea": "./src/scrollarea.tsx",
+    "./AppBar": "./src/components/landingpage/AppBar.tsx",
+    "./FeatureCard": "./src/components/landingpage/FeatureCard.tsx",
+    "./Features": "./src/components/landingpage/Features.tsx",
+    "./Footer": "./src/components/landingpage/footer.tsx",
+    "./Hero": "./src/components/landingpage/Hero.tsx",
+    ".":"./src/components/landingpage/index.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -19,13 +25,15 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@turbo/gen": "^1.12.4",
-    "@types/node": "^20.11.24",
+    "@types/node": "^20.17.6",
     "@types/react": "18.3.0",
     "@types/react-dom": "18.3.1",
     "typescript": "5.5.4"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@tailwindcss/postcss": "^4.0.1",
+    "next": "^15.1.6",
     "postcss": "^8.5.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
