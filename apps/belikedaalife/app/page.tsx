@@ -131,7 +131,7 @@ export default function Home() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-pink-500/20 rounded-2xl transform rotate-6"></div>
             <Image
-              src="https://unsplash.com/photos/brown-wooden-table-with-white-wall-VH8w75u3LE0"
+              src="https://images.unsplash.com/photo-1580493113011-ad79f792a7c2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2FudmFzfGVufDB8fDB8fHwy"
               alt="Collaborative Drawing"
               fill
               className="object-cover rounded-2xl shadow-2xl"
