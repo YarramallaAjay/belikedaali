@@ -2,7 +2,7 @@
 import type React from "react"
 import { useState } from "react"
 import { ExcaliInput } from "./ExcaliInput"
-import { ExcaliButton } from "./button"
+import { ExcaliButton } from "./ExcaliButton"
 import { ExcaliCheckbox } from "./checkBox"
 
 export const ExcaliAuthForm= ({isSignUp}:{

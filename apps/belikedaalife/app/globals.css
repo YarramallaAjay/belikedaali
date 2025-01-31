@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;700&display=swap');
 
 @import "tailwindcss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,21 +10,13 @@
   --foreground-rgb: 0, 0, 0;
   --background: 255, 255, 255;
   --cursor-color: rgba(59, 130, 246, 0.2);
-}
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    
-    /* Button Colors */
-    --btn-primary: 221.2 83.2% 53.3%;
-    --btn-primary-hover: 221.2 83.2% 45%;
-    --btn-secondary: 327 73% 52%;
-    --btn-secondary-hover: 327 73% 45%;
-    --btn-success: 142 71% 45%;
-    --btn-success-hover: 142 71% 38%;
-  }
+  
+  /* Element Colors */
+  --color-primary: #3B82F6;
+  --color-secondary: #EC4899;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-info: #06B6D4;
 }
 
 .cursor-glow {
@@ -35,6 +28,55 @@
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 9999;
+}
+
+.nav-shadow {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #2563EB;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--color-secondary);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #DB2777;
+  transform: translateY(-2px);
+}
+
+.feature-card {
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card.primary:hover {
+  border-color: var(--color-primary);
+}
+
+.feature-card.secondary:hover {
+  border-color: var(--color-secondary);
+}
+
+.feature-card.success:hover {
+  border-color: var(--color-success);
 }
 
 .floating-bubble {
@@ -63,129 +105,6 @@
   }
 }
 
-.btn {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  background: white;
-  border: 2px solid transparent;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: radial-gradient(
-    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    currentColor 0%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.btn:hover::before {
-  opacity: 0.15;
-}
-
-.btn-primary {
-  color: hsl(var(--btn-primary));
-  border-color: currentColor;
-}
-
-.btn-primary:hover {
-  color: white;
-  background: hsl(var(--btn-primary));
-}
-
-.btn-secondary {
-  color: hsl(var(--btn-secondary));
-  border-color: currentColor;
-}
-
-.btn-secondary:hover {
-  color: white;
-  background: hsl(var(--btn-secondary));
-}
-
-.btn-success {
-  color: hsl(var(--btn-success));
-  border-color: currentColor;
-}
-
-.btn-success:hover {
-  color: white;
-  background: hsl(var(--btn-success));
-}
-
-.feature-card {
-  position: relative;
-  background: white;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.feature-card::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: radial-gradient(
-    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    currentColor 0%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.feature-card:hover::before {
-  opacity: 0.15;
-}
-
-.feature-card.drawing {
-  color: hsl(var(--btn-primary));
-  border-color: currentColor;
-}
-
-.feature-card.collaboration {
-  color: hsl(var(--btn-secondary));
-  border-color: currentColor;
-}
-
-.feature-card.sharing {
-  color: hsl(var(--btn-success));
-  border-color: currentColor;
-}
-
-.sketch-underline {
-  position: relative;
-  display: inline-block;
-}
-
-.sketch-underline::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 2px;
-  background: currentColor;
-  opacity: 0.3;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-  transform-origin: left;
-}
-
-.sketch-underline:hover::after {
-  transform: scaleX(1);
-}
-
-@keyframes wiggle {
-  0%, 100% { transform: rotate(-1deg); }
-  50% { transform: rotate(1deg); }
-}
-
-.wiggle-hover:hover {
-  animation: wiggle 0.3s ease-in-out;
+.footer-gradient {
+  background: linear-gradient(to right, #3B82F6, #EC4899);
 }
