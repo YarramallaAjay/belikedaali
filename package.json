@@ -1,11 +1,23 @@
 {
   "name": "belikedaali",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "18.2.0",
+      "react-dom": "18.2.0",
+      "@types/react": "18.2.21",
+      "@types/react-dom": "18.2.7"
+    }
   },
   "devDependencies": {
     "@types/node": "^22.12.0",

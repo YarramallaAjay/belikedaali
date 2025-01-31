@@ -24,6 +24,6 @@ export default function Home() {
       // console.log("slug in button:"+slug)
        router.push(`/room/${slug}`);
     }}>Join Room</button>
-    </>  );
+    </> );
 }
 

@@ -14,13 +14,15 @@ async function getRooms(url:string){
     
 }
 
-export default async function ChatRoom({params}:{
-        params:{
-            slug:string
-        }
+type PageProps={
+    params:Promise<{
+        slug:string
+    }>
+}
+export default async function ChatRoom({params}:PageProps
         
     
-}){
+){
     const slug= (await params).slug
     const url=`${BACKEND_URL}/room/${slug}`
     // console.log(url)
