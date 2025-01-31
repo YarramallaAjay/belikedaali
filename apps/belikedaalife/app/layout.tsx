@@ -10,11 +10,13 @@ export const metadata: Metadata = {
   description: 'A fun and collaborative drawing tool inspired by Excalidraw',
 };
 
+interface LayoutProps{
+  children: React.ReactNode;
+}
+
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: LayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={caveat.className}>
