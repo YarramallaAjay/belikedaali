@@ -4,8 +4,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "outDir": "./dist",
-    "rootDir": "./",
-    "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

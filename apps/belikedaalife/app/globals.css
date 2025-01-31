@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 @import "tailwindcss";
 
@@ -6,12 +6,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background: 255, 255, 255;
+  --background-rgb: 255, 255, 255;
   --cursor-color: rgba(59, 130, 246, 0.2);
-  
-  /* Element Colors */
+
+  /* Color Palette */
   --color-primary: #3B82F6;
   --color-secondary: #EC4899;
   --color-success: #22C55E;
@@ -19,6 +20,18 @@
   --color-info: #06B6D4;
 }
 
+/* General Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb));
+  font-family: 'Inter', sans-serif;
+}
+
+/* Cursor Glow Effect */
 .cursor-glow {
   position: fixed;
   width: 200px;
@@ -30,81 +43,29 @@
   z-index: 9999;
 }
 
-.nav-shadow {
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+/* Buttons */
+.btn {
+  @apply px-4 py-2 rounded-md font-medium transition-all duration-300;
 }
 
 .btn-primary {
-  background: var(--color-primary);
-  color: white;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background: #2563EB;
-  transform: translateY(-2px);
+  @apply bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700;
 }
 
 .btn-secondary {
-  background: var(--color-secondary);
-  color: white;
-  transition: all 0.3s ease;
+  @apply bg-pink-500 text-white hover:bg-pink-600 active:bg-pink-700;
 }
 
-.btn-secondary:hover {
-  background: #DB2777;
-  transform: translateY(-2px);
-}
-
+/* Cards */
 .feature-card {
-  background: white;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  @apply bg-white shadow-lg rounded-lg p-6 transition-transform duration-300;
 }
 
 .feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  @apply scale-105 shadow-xl;
 }
 
-.feature-card.primary:hover {
-  border-color: var(--color-primary);
-}
-
-.feature-card.secondary:hover {
-  border-color: var(--color-secondary);
-}
-
-.feature-card.success:hover {
-  border-color: var(--color-success);
-}
-
-.floating-bubble {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: float 15s infinite linear;
-}
-
-.floating-bubble:nth-child(4n + 1) { background: rgba(59, 130, 246, 0.15); }
-.floating-bubble:nth-child(4n + 2) { background: rgba(236, 72, 153, 0.15); }
-.floating-bubble:nth-child(4n + 3) { background: rgba(34, 197, 94, 0.15); }
-.floating-bubble:nth-child(4n + 4) { background: rgba(168, 85, 247, 0.15); }
-
-@keyframes float {
-  0% {
-    transform: translateY(100vh) scale(0) rotate(0deg);
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(-100px) scale(1) rotate(360deg);
-    opacity: 0;
-  }
-}
-
+/* Footer Gradient */
 .footer-gradient {
   background: linear-gradient(to right, #3B82F6, #EC4899);
 }
