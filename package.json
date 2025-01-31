@@ -23,6 +23,7 @@
     "belikedaali": "file:",
     "next": "^15.1.6",
     "postcss": "^8.5.1",
-    "tailwindcss": "^4.0.1"
+    "tailwindcss": "^4.0.1",
+    "@repo/typescript-config":"workspace:*"
   }
 }

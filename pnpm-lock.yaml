@@ -11,6 +11,9 @@ importers:
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.0.0)
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:packages/typescript-config
       '@tailwindcss/postcss':
         specifier: ^4.0.1
         version: 4.0.1
@@ -6183,6 +6186,7 @@ snapshots:
   belikedaali@file:(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@heroicons/react': 2.2.0(react@19.0.0)
+      '@repo/typescript-config': link:packages/typescript-config
       '@tailwindcss/postcss': 4.0.1
       next: 15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       postcss: 8.5.1
