@@ -31,11 +31,22 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@prisma/client": "^6.2.1",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@repo/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.0.1",
     "belikedaali": "file:",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.0.6",
+    "lucide-react": "^0.474.0",
     "next": "^15.1.6",
     "postcss": "^8.5.1",
+    "prisma": "^6.2.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.1",
     "tailwindcss": "^4.0.1",
-    "@repo/typescript-config":"workspace:*"
+    "vercel": "^39.4.2"
   }
 }
