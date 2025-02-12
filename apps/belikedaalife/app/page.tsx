@@ -1,11 +1,70 @@
 "use client";
-import React from "react"
+import React, { useRef, useState } from "react"
 import Link from "next/link"
 import { AnimatedCanvas } from "./components/AnimatedCanvas"
 import { FeatureCard } from "./components/FeatureCard"
 import { Button } from "./components/ui/Button"
+import { useRouter } from "next/navigation";
+
+
 
 export default function Home() {
+
+
+  const[popup,setPopup]=useState(false)
+  
+  const [slug,setSlug]=useState("")
+
+  const timeoutRef=useRef<ReturnType<typeof setTimeout>|null>(null)
+
+  const router=useRouter()
+
+  const openPopUp=()=>{
+    setPopup(true)
+  }
+
+  const closepopUp=()=>{
+    // isSignedIn().then((data)=>{
+    //   console.log(data)
+      setPopup(false)
+      router.push(`/canvas/${slug}`)
+    // }).catch(err=>{
+    //   console.log(err)
+    // })
+
+  }
+
+  function isSignedIn(){
+    return new Promise((resolve,reject)=>{
+      console.log("in signedIn()")
+
+      router.push(`/auth/signup`)
+
+    })
+    
+    
+}
+
+function useDebouncer(func:CallableFunction,delay:number){
+  if(timeoutRef.current){
+    clearTimeout(timeoutRef.current)
+
+
+  }
+  timeoutRef.current=setTimeout(()=>{
+      try{
+        console.log("in debouncer")
+          func()
+          return 
+      }
+      catch(e){
+          console.error(e)
+      }
+  },delay)
+}
+
+
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
@@ -39,9 +98,27 @@ export default function Home() {
               Create stunning diagrams, sketches, and illustrations with our intuitive drawing tool. Collaborate in
               real-time and bring your ideas to life.
             </p>
-            <Button asChild size="lg">
-              <Link href="/auth?mode=signup">Get Started for Free</Link>
+            <Button asChild size="lg" onClick={isSignedIn}>
+              <Link href="">Get Started for Free</Link>
             </Button>
+            <Button asChild size="lg" onClick={openPopUp} className="bg-gray-900 font-bold text-white">
+              <Link href="">Join Room</Link>
+            </Button>
+
+            {popup && <div className="bg-white-900 flex justify center text-gray-900">
+              <p>Join Room</p>
+              <div>
+                <input value={slug} type="text" placeholder="Enter Room Id" onChange={(e)=>{
+                  e.preventDefault()
+                  
+                    setSlug(e.target.value)
+                  // setSlug(e.target.value)
+                }}></input>
+              </div>
+              <div>
+                <Button onClick={closepopUp}>join</Button>
+              </div>
+              </div>}
           </div>
           <div className="lg:w-1/2">
             <AnimatedCanvas />
