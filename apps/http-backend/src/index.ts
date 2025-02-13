@@ -28,13 +28,7 @@ app.post('/signup',async (req,res)=>{
         userId:userExisted.id
        },JWTTOKEN);  
        try{
-        res.setHeader("Set-Cookie", cookie?.serialize("token",token,{
-            httpOnly:true,
-            maxAge:60*60*24*7,
-            path:"/",
-            sameSite:"none",
-            secure:false,
-       })).status(201).send("cookie setting done")
+        res.status(200).send(token)
        console.log("cookie setting done")
        }
        catch(e){
@@ -55,14 +49,7 @@ app.post('/signup',async (req,res)=>{
     userId:user.id
    },JWTTOKEN);
    console.log(user.id);
-   res.setHeader("Set-Cookie",cookie.serialize("token",token,{
-    httpOnly:true,
-    maxAge:60*60*24*7,
-    path:"/",
-    sameSite:"none",
-    secure:false,
-
-   }))
+   res.status(200).send(token)
    res.status(200).send({message:"Successfully signed up! Redirecting to sign in..."});
 
     }

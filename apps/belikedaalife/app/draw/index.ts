@@ -1,112 +1,156 @@
-import axios from "axios";
-import { BACKEND_URL } from "../config";
+import { Tool } from "./canvas";
+import { getExistingShapes } from "./http";
 
-interface Shape {
-    type: string;
+type Shape = {
+    type: "rect";
     x: number;
     y: number;
-    width?: number;
-    height?: number;
-    radius?: number;
-    depth?: number;
-    strokeColor: string;
-    fillColor: string;
-    opacity: number;
-    strokeWidth: number;
+    width: number;
+    height: number;
+} | {
+    type: "circle";
+    centerX: number;
+    centerY: number;
+    radius: number;
+} | {
+    type: "pencil";
+    startX: number;
+    startY: number;
+    endX: number;
+    endY: number;
 }
 
-interface DrawConfig {
-    strokeColor: string;
-    fillColor: string;
-    opacity: number;
-    strokeWidth: number;
-}
+export class Game {
+    private canvas: HTMLCanvasElement;
+    private ctx: CanvasRenderingContext2D;
+    private existingShapes: Shape[];
+    private roomId: string;
+    private clicked: boolean;
+    private startX = 0;
+    private startY = 0;
+    private selectedTool: Tool = "circle";
 
-export async function initDraw(canvas: HTMLCanvasElement, socket: WebSocket, roomId: string) {
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    socket: WebSocket;
 
-    let defaultConfig: DrawConfig = {
-        strokeColor: "white",
-        fillColor: "black",
-        opacity: 1,
-        strokeWidth: 2
+    constructor(canvas: HTMLCanvasElement, roomId: string, socket: WebSocket) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext("2d")!;
+        this.existingShapes = [];
+        this.roomId = roomId;
+        this.socket = socket;
+        this.clicked = false;
+        this.init();
+        this.initHandlers();
+        this.initMouseHandlers();
+    }
+    
+    destroy() {
+        this.canvas.removeEventListener("mousedown", this.mouseDownHandler);
+        this.canvas.removeEventListener("mouseup", this.mouseUpHandler);
+        this.canvas.removeEventListener("mousemove", this.mouseMoveHandler);
+    }
+
+    setTool(tool: "circle" | "pencil" | "rect") {
+        this.selectedTool = tool;
+    }
+
+    async init() {
+        this.existingShapes = await getExistingShapes(this.roomId);
+        console.log(this.existingShapes);
+        this.clearCanvas();
+        this.redrawShapes();
+    }
+
+    initHandlers() {
+        this.socket.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            if (message.type === "chat") {
+                const parsedShape = JSON.parse(message.message);
+                this.existingShapes.push(parsedShape.shape);
+                this.clearCanvas();
+                this.redrawShapes();
+            }
+        };
+    }
+
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = "rgba(0, 0, 0)";
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    redrawShapes() {
+        this.existingShapes.map((shape) => {
+            console.log("shape")
+            console.log(shape)
+            this.ctx.strokeStyle = "rgba(255, 255, 255)";
+            if (shape.type === "rect") {
+                this.ctx.strokeRect(shape.x, shape.y, shape.width, shape.height);
+            } else if (shape.type === "circle") {
+                this.ctx.beginPath();
+                this.ctx.arc(shape.centerX, shape.centerY, Math.abs(shape.radius), 0, Math.PI * 2);
+                this.ctx.stroke();
+                this.ctx.closePath();
+            }
+        });
+    }
+
+    mouseDownHandler = (e) => {
+        this.clicked = true;
+        this.startX = e.clientX;
+        this.startY = e.clientY;
     };
-    let userConfig = { ...defaultConfig };
-
-    let ExistingShapes: Shape[] = await getExistingShapes(roomId);
-    drawShapes(ExistingShapes, ctx);
-
-    document.addEventListener("change", (e) => {
-        const target = e.target as HTMLInputElement;
-        if (!target) return;
-        if (target.id === "strokeColor") userConfig.strokeColor = target.value;
-        if (target.id === "fillColor") userConfig.fillColor = target.value;
-        if (target.id === "opacity") userConfig.opacity = parseFloat(target.value);
-        if (target.id === "strokeWidth") userConfig.strokeWidth = parseInt(target.value);
-    });
-
-    let dragging = false;
-    let startX = 0, startY = 0;
-    let selectedShape: Shape | null = null;
-    let shapeType = "rect";
-
-    canvas.addEventListener("mousedown", (e) => {
-        startX = e.clientX;
-        startY = e.clientY;
-        selectedShape = getClickedShape(startX, startY, ExistingShapes);
-        dragging = true;
-    });
-
-    canvas.addEventListener("mousemove", (e) => {
-        if (!dragging) return;
-        if (selectedShape) {
-            selectedShape.x = e.clientX;
-            selectedShape.y = e.clientY;
-            drawShapes(ExistingShapes, ctx);
+    
+    mouseUpHandler = (e) => {
+        this.clicked = false;
+        const width = e.clientX - this.startX;
+        const height = e.clientY - this.startY;
+        
+        let shape: Shape | null = null;
+        if (this.selectedTool === "rect") {
+            shape = { type: "rect", x: this.startX, y: this.startY, width, height };
+        } else if (this.selectedTool === "circle") {
+            const radius = Math.max(width, height) / 2;
+            shape = { type: "circle", centerX: this.startX + radius, centerY: this.startY + radius, radius };
         }
-    });
 
-    canvas.addEventListener("mouseup", () => {
-        dragging = false;
-        selectedShape = null;
-    });
-}
+        if (!shape) return;
 
-function drawShapes(shapes: Shape[], ctx: CanvasRenderingContext2D) {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    shapes.forEach(shape => {
-        ctx.globalAlpha = shape.opacity;
-        ctx.strokeStyle = shape.strokeColor;
-        ctx.fillStyle = shape.fillColor;
-        ctx.lineWidth = shape.strokeWidth;
-        if (shape.type === "rect") {
-            ctx.strokeRect(shape.x, shape.y, shape.width!, shape.height!);
-            ctx.fillRect(shape.x, shape.y, shape.width!, shape.height!);
-        } else if (shape.type === "circle") {
-            ctx.beginPath();
-            ctx.arc(shape.x, shape.y, shape.radius!, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.fill();
+        this.existingShapes.push(shape);
+        this.clearCanvas();
+        this.redrawShapes();
+
+        this.socket.send(JSON.stringify({
+            type: "chat",
+            message: JSON.stringify({ shape }),
+            roomId: this.roomId
+        }));
+    };
+    
+    mouseMoveHandler = (e) => {
+        if (this.clicked) {
+            const width = e.clientX - this.startX;
+            const height = e.clientY - this.startY;
+            this.clearCanvas();
+            this.redrawShapes();
+            this.ctx.strokeStyle = "rgba(255, 255, 255)";
+            if (this.selectedTool === "rect") {
+                this.ctx.strokeRect(this.startX, this.startY, width, height);
+            } else if (this.selectedTool === "circle") {
+                const radius = Math.max(width, height) / 2;
+                const centerX = this.startX + radius;
+                const centerY = this.startY + radius;
+                this.ctx.beginPath();
+                this.ctx.arc(centerX, centerY, Math.abs(radius), 0, Math.PI * 2);
+                this.ctx.stroke();
+                this.ctx.closePath();
+            }
         }
-    });
-}
+    };
 
-function getClickedShape(x: number, y: number, shapes: Shape[]): Shape | null {
-    return shapes.find(shape => 
-        x >= shape.x && x <= shape.x + (shape.width || shape.radius! * 2) &&
-        y >= shape.y && y <= shape.y + (shape.height || shape.radius! * 2)
-    ) || null;
-}
-
-async function getExistingShapes(roomId: string) {
-    try {
-        const response = await axios.get(`${BACKEND_URL}/chats/${roomId}`);
-        return response.data.map((x: any) => JSON.parse(x.message));
-    } catch (e) {
-        console.log(e);
-        return [];
+    initMouseHandlers() {
+        this.canvas.addEventListener("mousedown", this.mouseDownHandler);
+        this.canvas.addEventListener("mouseup", this.mouseUpHandler);
+        this.canvas.addEventListener("mousemove", this.mouseMoveHandler);
     }
 }

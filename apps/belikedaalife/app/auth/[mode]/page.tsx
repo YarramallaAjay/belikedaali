@@ -1,29 +1,15 @@
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
-import { useState, Suspense, useRef, useEffect } from "react"
-import { motion } from "framer-motion"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "../../components/ui/Button"
-import { Input } from "../../components/ui/Input"
-import { Label } from "../../components/ui/Label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
-import axios from "axios"
-import { BACKEND_URL } from "../../config"
-import { validateSignIn } from "./../signInValidation"
-import AuthPage from "../../components/AuthPage"
-
-export default async function AuthPageContent({params}:{
-  params:{mode:"signin"|"signup"}
-}) {
-  const Authmode =( await params).mode
-
-
-
-
-
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-    <AuthPage mode={Authmode} />
-  </Suspense>
-  )
-}
-
+export default NextAuth({
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID||"",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET||" ",
+    }),
+  ],
+  secret: process.env.NEXTAUTH_SECRET,  // You can generate a secret using `openssl rand -base64 32`
+  pages: {
+     // Optional: Customize sign-in page
+  },
+});

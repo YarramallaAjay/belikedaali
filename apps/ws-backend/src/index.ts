@@ -27,14 +27,18 @@ function AuthUser(token: string) {
 async function syncMessagesToDB(message: any, userId: string) {
     console.log("Called syncMessagesToDB");
 
+
     if (!message || !message.message) {
         console.log("Empty message");
         return;
     }
 
     if (typeof message === "string") {
-        message = JSON.parse(message);
+
+        message= JSON.parse(message);
     }
+    console.log(message)
+
 
     try {
         const chatMessage = await prismaClient.chat.create({
